@@ -1,7 +1,8 @@
 <?php
 require __DIR__ . "/input.php";
 
-function findNumberOfArrangements($input, $i = 0) {
+function findNumberOfArrangements($input, $i = 0)
+{
     var_dump($input);
     $arrangementCount = 0;
 
@@ -12,7 +13,7 @@ function findNumberOfArrangements($input, $i = 0) {
     $diff = $input[$i + 1] - $input[$i];
     var_dump($diff);
     if ($diff == 3) {
-        findNumberOfArrangements($input, $i+1);
+        findNumberOfArrangements($input, $i + 1);
     } elseif ($diff == 2) {
         $index = array_search($input[$i] + 3, $input);
         if ($index !== false) {

@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class Part1 {
     public static void main(String[] args) {
-        ArrayList<Integer> input = Input.getInput("input.txt");
+        ArrayList<Integer> input = Input.getInput("testInputBig.txt");
         assert input != null;
         input.add(0);
         input.add(Collections.max(input) + 3);

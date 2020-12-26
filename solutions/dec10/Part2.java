@@ -5,46 +5,64 @@ import java.util.Collections;
 
 public class Part2 {
     public static void main(String[] args) {
-        ArrayList<Integer> input = Input.getInput("input.txt");
+        ArrayList<Integer> input = Input.getInput("testInputSmall.txt");
         assert input != null;
         input.add(0);
         input.add(Collections.max(input) + 3);
         Collections.sort(input);
 
+        System.out.println(input);
         System.out.println(arrangementsCount(input));
     }
 
-    public static int arrangementsCount(ArrayList<Integer> list) {
-        if (list.size() == 3) {
-            return 1;
-        }
-
-        int arrangementCount = 1;
+    public static long arrangementsCount(ArrayList<Integer> list) {
+        long lanesCount = 1;
 
         int currentElement;
         int nextElement;
+        int lastElementForked = 0;
+        boolean forkedAtFirst;
 
         for (int i = 0; i < list.size() - 1; i++) {
             currentElement = list.get(i);
             nextElement = list.get(i + 1);
             int diff = nextElement - currentElement;
+            forkedAtFirst = false;
 
-            if (diff <= 2) {
-                if (diff != 2) {
-                    int indexOfElem2 = list.indexOf(currentElement + 2);
-                    if (indexOfElem2 != -1) {
-                        arrangementCount += arrangementsCount(new ArrayList<>(list.subList(indexOfElem2, list.size())));
+            if (diff < 3) {
+                if (diff == 1) {
+                    if (list.contains(currentElement + 2)) {
+
+                        if (i != 0 && lastElementForked == list.get(i - 1)) {
+                            lanesCount++;
+                        } else {
+                            lanesCount *= 2;
+                        }
+
+//                        System.out.println("Fork from " + currentElement + " to " + (currentElement + 2));
+                        forkedAtFirst = true;
+                        lastElementForked = currentElement;
                     }
                 }
 
-                int indexOfElem3 = list.indexOf(currentElement + 3);
-                if (indexOfElem3 != -1) {
-                    arrangementCount += arrangementsCount(new ArrayList<>(list.subList(indexOfElem3, list.size())));
+                if (list.contains(currentElement + 3)) {
+                    if (forkedAtFirst) {
+                        lanesCount *= 1.5;
+                    } else if (i != 0 && lastElementForked == list.get(i - 1)) {
+                        System.out.println("plusb");
+                        lanesCount++;
+                    } else {
+                        System.out.println("times2b");
+                        lanesCount *= 2;
+                    }
+//                    System.out.println("Fork from " + currentElement + " to " + (currentElement + 3));
+                    lastElementForked = currentElement;
                 }
             }
-//            System.out.println(arrangementCount);
+
+//            System.out.println(lanesCount);
         }
 
-        return arrangementCount;
+        return lanesCount;
     }
 }

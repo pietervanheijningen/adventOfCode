@@ -2,8 +2,11 @@ package dec10;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class Part2 {
+    private static HashMap<ArrayList<Integer>, Long> resultsCache = new HashMap<>();
+
     public static void main(String[] args) {
         ArrayList<Integer> input = Input.getInput("input.txt");
         assert input != null;
@@ -14,12 +17,16 @@ public class Part2 {
         System.out.println(arrangementsCount(input));
     }
 
-    public static int arrangementsCount(ArrayList<Integer> list) {
+    public static long arrangementsCount(ArrayList<Integer> list) {
+        if (resultsCache.containsKey(list)) {
+            return resultsCache.get(list);
+        }
+
         if (list.size() == 3) {
             return 1;
         }
 
-        int arrangementCount = 1;
+        long arrangementCount = 1;
 
         int currentElement;
         int nextElement;
@@ -42,9 +49,9 @@ public class Part2 {
                     arrangementCount += arrangementsCount(new ArrayList<>(list.subList(indexOfElem3, list.size())));
                 }
             }
-//            System.out.println(arrangementCount);
         }
 
+        resultsCache.put(list, arrangementCount);
         return arrangementCount;
     }
 }

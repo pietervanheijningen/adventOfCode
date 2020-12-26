@@ -2,67 +2,56 @@ package dec10;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class Part2 {
+    private static HashMap<ArrayList<Integer>, Long> resultsCache = new HashMap<>();
+
     public static void main(String[] args) {
-        ArrayList<Integer> input = Input.getInput("testInputSmall.txt");
+        ArrayList<Integer> input = Input.getInput("input.txt");
         assert input != null;
         input.add(0);
         input.add(Collections.max(input) + 3);
         Collections.sort(input);
 
-        System.out.println(input);
         System.out.println(arrangementsCount(input));
     }
 
     public static long arrangementsCount(ArrayList<Integer> list) {
-        long lanesCount = 1;
+        if (resultsCache.containsKey(list)) {
+            return resultsCache.get(list);
+        }
+
+        if (list.size() == 3) {
+            return 1;
+        }
+
+        long arrangementCount = 1;
 
         int currentElement;
         int nextElement;
-        int lastElementForked = 0;
-        boolean forkedAtFirst;
 
         for (int i = 0; i < list.size() - 1; i++) {
             currentElement = list.get(i);
             nextElement = list.get(i + 1);
             int diff = nextElement - currentElement;
-            forkedAtFirst = false;
 
-            if (diff < 3) {
-                if (diff == 1) {
-                    if (list.contains(currentElement + 2)) {
-
-                        if (i != 0 && lastElementForked == list.get(i - 1)) {
-                            lanesCount++;
-                        } else {
-                            lanesCount *= 2;
-                        }
-
-//                        System.out.println("Fork from " + currentElement + " to " + (currentElement + 2));
-                        forkedAtFirst = true;
-                        lastElementForked = currentElement;
+            if (diff <= 2) {
+                if (diff != 2) {
+                    int indexOfElem2 = list.indexOf(currentElement + 2);
+                    if (indexOfElem2 != -1) {
+                        arrangementCount += arrangementsCount(new ArrayList<>(list.subList(indexOfElem2, list.size())));
                     }
                 }
 
-                if (list.contains(currentElement + 3)) {
-                    if (forkedAtFirst) {
-                        lanesCount *= 1.5;
-                    } else if (i != 0 && lastElementForked == list.get(i - 1)) {
-                        System.out.println("plusb");
-                        lanesCount++;
-                    } else {
-                        System.out.println("times2b");
-                        lanesCount *= 2;
-                    }
-//                    System.out.println("Fork from " + currentElement + " to " + (currentElement + 3));
-                    lastElementForked = currentElement;
+                int indexOfElem3 = list.indexOf(currentElement + 3);
+                if (indexOfElem3 != -1) {
+                    arrangementCount += arrangementsCount(new ArrayList<>(list.subList(indexOfElem3, list.size())));
                 }
             }
-
-//            System.out.println(lanesCount);
         }
 
-        return lanesCount;
+        resultsCache.put(list, arrangementCount);
+        return arrangementCount;
     }
 }

@@ -1,5 +1,27 @@
 <?php
 
+$testinputsmall = [
+    "aaaaaaa",
+    "bbbbbbb",
+    "ccccccc",
+    "...L..#",
+    "ddddddd",
+    "eeeeeee",
+];
+
+$testinputstep2 = [
+    "#.LL.LL.L#",
+    "#LLLLLL.LL",
+    "L.L.L..L..",
+    "LLLL.LL.LL",
+    "L.LL.LL.LL",
+    "L.LLLLL.LL",
+    "..L.L.....",
+    "LLLLLLLLL#",
+    "#.LLLLLL.L",
+    "#.LLLLL.L#"
+];
+
 $testinput = [
     "L.LL.LL.LL",
     "LLLLLLL.LL",

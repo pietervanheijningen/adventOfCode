@@ -1,2 +1,2 @@
-## Solutions for Advent of Code 2020
-mostly done in PHP
+## Solutions for Advent of Code
+mostly done in PHP, some Java

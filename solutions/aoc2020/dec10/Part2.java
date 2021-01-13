@@ -1,4 +1,4 @@
-package dec10;
+package aoc2020.dec10;
 
 import java.util.ArrayList;
 import java.util.Collections;

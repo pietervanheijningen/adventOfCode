@@ -1,4 +1,4 @@
 .idea/workspace.xml
 out/
 solutions/aoc2021/config.py
-__pycache__
+solutions/aoc2021/__pycache__

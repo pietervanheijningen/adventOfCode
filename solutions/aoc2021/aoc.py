@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from .config import sessionToken
 
 
-def get_input(day):
+def get_input(day, raw=False):
     cache_file_path = os.path.abspath(__file__ + f'/../_cache/{day}_input.txt')
     if os.path.exists(cache_file_path):
         with open(cache_file_path, mode='r') as f:
@@ -24,9 +24,13 @@ def get_input(day):
             f.write(input_text)
             f.close()
 
-    return input_text.split("\n")[:-1]
+    if raw:
+        return input_text
+    else:
+        return input_text.split("\n")[:-1]
 
-def get_sample(day):
+
+def get_sample(day, raw=False):
     cache_file_path = os.path.abspath(__file__ + f'/../_cache/{day}_sample.txt')
     if os.path.exists(cache_file_path):
         with open(cache_file_path, mode='r') as f:
@@ -47,4 +51,7 @@ def get_sample(day):
             f.write(input_text)
             f.close()
 
-    return input_text.split("\n")[:-1]
+    if raw:
+        return input_text
+    else:
+        return input_text.split("\n")[:-1]

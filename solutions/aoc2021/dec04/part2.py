@@ -12,6 +12,7 @@ drawn_numbers = list(map(int, input[0].split(",")))
 
 boards = {}
 board_count = 0
+winning_boards = []
 for line in input[2:]:
     row = re.split('[ ]+', line.strip())
 
@@ -54,6 +55,9 @@ def is_winning_column(col_num, board_index):
     return True
 
 def calculate_score(board_index, last_number):
+    if board_index in winning_boards:
+        return
+
     sum_unmarked = 0
 
     for row in boards[board_index]:
@@ -61,7 +65,7 @@ def calculate_score(board_index, last_number):
             if num >= 0:
                 sum_unmarked += num
 
+    winning_boards.append(board_index)
     print(sum_unmarked * last_number)
-    exit()
 
 play_bingo()
